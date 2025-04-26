@@ -10,6 +10,7 @@ const searchInput = document.getElementById("search-input");
 
 function init() {
     loadPokemonData();
+    console.log(pokemonList);
 }
 
 function renderCards(list) {
@@ -57,5 +58,5 @@ function renderPokemons(list) {
     });
 }
 
-  searchInput.addEventListener('input', () => renderPokemons(pokemonList));
+//   searchInput.addEventListener('input', () => renderPokemons(pokemonList));
 

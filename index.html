@@ -7,14 +7,16 @@
 
     <link rel="icon" href="./assets/icons/pokemon-icon.ico">
 
-
     <script src="./script.js"></script>
     <script src="./scripts/templates.js"></script>
     <script src="./scripts/charactertypes.js"></script>
+    <script src="./scripts/overlay.js"></script>
 
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./styles/card.css">
     <link rel="stylesheet" href="./styles/assets.css">
+    <link rel="stylesheet" href="./styles/overlay.css">
+
  
 
 </head>
@@ -39,9 +41,25 @@
     </main>
 
    <!--
-   hier kommt das overlay>"
+   hier kommt das overlay - Achtung im Fotogram war das Overlay unter dem Footer, ggfs. hier anpassen>" -->
+
+    <div id="overlay" class="overlay" onclick="closeOverlay()">
+        <div class="overlay-content" onclick="event.stopPropagation()">
+            <img id="overlayImage" class="overlay-image" src="" alt="enlarged image">
+            <div class="overlay-info">
+              <div id="overlayIdName" class="id-name"></div>
+              <div id="overlayTypes" class="types"></div>
+            </div>
+
+            <div class="overlay-footer">
+                <button id="prevBtn" class="nav-btn" onclick="showPrevImage()"></button>
+                <span id="overlayCounter"></span>
+                <button id="nextBtn" class="nav-btn" onclick="showNextImage()">></button>
+            </div>
+
+        </div>
+    </div>
    
-   -->
 
    <footer>
         <div class="content">

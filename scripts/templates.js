@@ -10,7 +10,7 @@ function getCardTemplate(pokemon, i) {
     
     return` 
         <div class="card">
-            <div class="card-header">
+            <div class="card-header" onclick="openOverlay(${i})">
                 <span class="number">${String(pokemon.id).padStart(4, '0')}</span>
                 <span class="name">${pokemon.name}</span>
             </div>
