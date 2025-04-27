@@ -16,9 +16,6 @@
     <link rel="stylesheet" href="./styles/card.css">
     <link rel="stylesheet" href="./styles/assets.css">
     <link rel="stylesheet" href="./styles/overlay.css">
-
- 
-
 </head>
 <body onload="init()">
  
@@ -45,17 +42,41 @@
 
     <div id="overlay" class="overlay" onclick="closeOverlay()">
         <div class="overlay-content" onclick="event.stopPropagation()">
-            <img id="overlayImage" class="overlay-image" src="" alt="enlarged image">
-            <div class="overlay-info">
-              <div id="overlayIdName" class="id-name"></div>
-              <div id="overlayTypes" class="types"></div>
+            
+            <!-- kommentar 
+            Überschrift besteht aus Index und Name - rechts und links die Buttons zum schalten
+            Bild
+            TypeIcon mit Typname - kann aus der Karte übernommen werden
+            Navigationsleiste
+            
+            Je nach Auswahl der Navigation der Inhalt, diese Daten werden evtl. direkt aus der API gezogeh?            
+            
+            -->
+
+            <div class="overlay-header">
+                <button id="prevBtn" class="nav-btn" onclick="showPrevImage()">x</button>
+                <div id="overlayIdName" class="overlay-id-name"></div>
+                <button id="nextBtn" class="nav-btn" onclick="showNextImage()">Y</button>
             </div>
 
-            <div class="overlay-footer">
-                <button id="prevBtn" class="nav-btn" onclick="showPrevImage()"></button>
-                <span id="overlayCounter"></span>
-                <button id="nextBtn" class="nav-btn" onclick="showNextImage()">></button>
+            <div class="overlay-img-container">
+                <!-- <div class="overlay-img-container" style="background-color: ${typeColors[primary]}"> -->
+
+                <img id="overlayImage" class="overlay-image" src="" alt="enlarged image">
             </div>
+            <div class="overlay-info">
+                <div id="overlayTypes" class="types"></div>
+            </div>
+
+            <nav class="navbar">
+                <ul class="nav-tabs">
+                  <li class="nav-tab active">main</li>
+                  <li class="nav-tab">stats</li>
+                  <li class="nav-tab">evo chain</li>
+                </ul>
+              </nav>  
+
+            
 
         </div>
     </div>
