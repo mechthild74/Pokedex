@@ -30,11 +30,33 @@ function updateOverlay(index){
 }
 
 function showNextImage() {
-    currentIndex = (currentIndex + 1) % imgs.length;
+    currentIndex = (currentIndex + 1) % pokemonList.length;
     updateOverlay(currentIndex);
 }
 
 function showPrevImage() {
-    currentIndex = (currentIndex - 1 + imgs.length) % imgs.length;
+    currentIndex = (currentIndex - 1 + pokemonList.length) % pokemonList.length;
     updateOverlay(currentIndex);
 }
+
+    function setActiveTab(clickedTab, contentId) {
+        // Alle Tabs deaktivieren
+        const allTabs = document.querySelectorAll('.nav-tab');
+        allTabs.forEach(tab => tab.classList.remove('active'));
+    
+        // Aktuellen Tab aktivieren
+        clickedTab.classList.add('active');
+    
+        // Alle Content-Bereiche verstecken
+        const allContents = document.querySelectorAll('.nav-body');
+        allContents.forEach(content => {
+          content.style.display = 'none';
+        });
+    
+        // Nur den passenden anzeigen
+        const activeContent = document.getElementById(contentId);
+        if (activeContent) {
+          activeContent.style.display = 'block';
+        }
+      }
+  

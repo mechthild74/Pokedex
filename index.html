@@ -44,11 +44,7 @@
         <div class="overlay-content" onclick="event.stopPropagation()">
             
             <!-- kommentar 
-            Überschrift besteht aus Index und Name - rechts und links die Buttons zum schalten
-            Bild
-            TypeIcon mit Typname - kann aus der Karte übernommen werden
-            Navigationsleiste
-            
+                      
             Je nach Auswahl der Navigation der Inhalt, diese Daten werden evtl. direkt aus der API gezogeh?            
             
             -->
@@ -70,14 +66,75 @@
 
             <nav class="navbar">
                 <ul class="nav-tabs">
-                  <li class="nav-tab active">main</li>
-                  <li class="nav-tab">stats</li>
-                  <li class="nav-tab">evo chain</li>
+                  <li class="nav-tab active" onclick="setActiveTab(this,'nav-main')">main</li>
+                  <li class="nav-tab" onclick="setActiveTab(this, 'nav-stats')">stats</li>
+                  <li class="nav-tab" onclick="setActiveTab(this, 'nav-evo-chain')">evo chain</li>
                 </ul>
               </nav>  
 
-            
+            <div class="nav-body" id="nav-main">              
+                    <table class="info-table">
+                      <tr>
+                        <td>HEIGHT:</td>
+                        <td>0.6 m</td>
+                      </tr>
+                      <tr>
+                        <td>WEIGHT:</td>
+                        <td>8.5 kg</td>
+                      </tr>
+                      <tr>
+                        <td>BASE EXPERIENCE:</td>
+                        <td>62</td>
+                      </tr>
+                      <tr>
+                        <td>ABILITIES:</td>
+                        <td>blaze, solar-power</td>
+                      </tr>
+                    </table>
+            </div>
 
+            <div class="nav-body" id="nav-stats" style="display: none;">
+                <div class="stat">
+                    <div class="stat-name">HP</div>
+                    <div class="stat-bar">
+                        <div class="stat-fill" style="width: 25%;"></div>
+                    </div>
+                  </div>
+                  <div class="stat">
+                    <div class="stat-name">ATTACK</div>
+                    <div class="stat-bar">
+                        <div class="stat-fill" style="width: 40%;"></div>
+                    </div>
+                  </div>
+                  <div class="stat">
+                    <div class="stat-name">DEFENSE</div>
+                    <div class="stat-bar">
+                        <div class="stat-fill" style="width: 30%;"></div>
+                    </div>
+                  </div>
+                  <div class="stat">
+                    <div class="stat-name">SPECIAL-ATTACK</div>
+                    <div class="stat-bar">
+                        <div class="stat-fill" style="width: 45%;"></div>
+                    </div>
+                  </div>
+                  <div class="stat">
+                    <div class="stat-name">SPECIAL-DEFENSE</div>
+                    <div class="stat-bar">
+                        <div class="stat-fill" style="width: 50%;"></div>
+                    </div>
+                  </div>
+                  <div class="stat">
+                    <div class="stat-name">SPEED</div>
+                    <div class="stat-bar">
+                        <div class="stat-fill" style="width: 55%;"></div>
+                    </div>
+                  </div>
+            </div>
+
+            <div class="nav-body" id="nav-evo-chain" style="display: none;">
+
+            </div>
         </div>
     </div>
    
