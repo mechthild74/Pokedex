@@ -8,6 +8,8 @@ let allLoaded = false;
 let totalCount = null;
 const searchInput = document.getElementById("search-input");
 
+let primary = "";
+
 function init() {
     loadPokemonData();
     console.log(pokemonList);

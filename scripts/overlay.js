@@ -3,7 +3,7 @@ let currentIndex = 0;
 function openOverlay(index) {
     // current index wird korrekt erkannt
     currentIndex = index;
-    // renderOverlay(pokemonList[index]);
+    renderOverlayCard(index);
     updateOverlay(currentIndex);
     const overlay = document.getElementById("overlay");
     overlay.style.display = "flex";
@@ -15,6 +15,14 @@ function closeOverlay() {
     overlay.style.display = "none";
     document.body.style.overflow = '';
 }
+
+function renderOverlayCard(index) {
+    const pokemon = pokemonList[index];
+    let contentRef = document.getElementById("overlay-content");
+    contentRef.innerHTML = "";
+    contentRef.innerHTML += getOverlayCardTemplate(pokemon);
+}
+
 
 function updateOverlay(index){
     let overlayImage = document.getElementById('overlayImage');

@@ -1,5 +1,5 @@
 function getCardTemplate(pokemon, i) {
-    const primary = pokemon.types[0];  // hier kommt der erste Typ rein
+    primary = pokemon.types[0];  // hier kommt der erste Typ rein
     const typesHTML = pokemon.types
     .map(t => 
         `<span class="type ${t}" style="background-color: ${typeColors[t]}">
@@ -24,3 +24,97 @@ function getCardTemplate(pokemon, i) {
         </div>`
 }
 
+function getOverlayCardTemplate(pokemon) {
+    
+    const primaryback = pokemon.types[0]; // Lokale Bestimmung des Haupttyps
+    
+    return `
+    <div class="overlay-header">
+        <button id="prevBtn" class="nav-btn" onclick="showPrevImage()">
+            <img src="./assets/icons/left-arrow-v1.png" alt="previous icon">
+        </button>
+        <div id="overlayIdName" class="overlay-id-name"></div>
+        <button id="nextBtn" class="nav-btn" onclick="showNextImage()">
+            <img src="./assets/icons/right-arrow-v1.png" alt="next icon">
+        </button>
+    </div>
+
+    <div class="overlay-img-container" style="background-color: ${typeColors[primaryback]}">
+        <img id="overlayImage" class="overlay-image" src="" alt="enlarged image">
+    </div>
+    <div class="overlay-info">
+        <div id="overlayTypes" class="types"></div>
+    </div>
+
+    <nav class="navbar">
+        <ul class="nav-tabs">
+        <li class="nav-tab active" onclick="setActiveTab(this,'nav-main')">main</li>
+        <li class="nav-tab" onclick="setActiveTab(this, 'nav-stats')">stats</li>
+        <li class="nav-tab" onclick="setActiveTab(this, 'nav-evo-chain')">evo chain</li>
+        </ul>
+    </nav>  
+
+    <div class="nav-body" id="nav-main">              
+            <table class="info-table">
+            <tr>
+                <td>HEIGHT:</td>
+                <td>0.6 m</td>
+            </tr>
+            <tr>
+                <td>WEIGHT:</td>
+                <td>8.5 kg</td>
+            </tr>
+            <tr>
+                <td>BASE EXPERIENCE:</td>
+                <td>62</td>
+            </tr>
+            <tr>
+                <td>ABILITIES:</td>
+                <td>blaze, solar-power</td>
+            </tr>
+            </table>
+    </div>
+
+    <div class="nav-body" id="nav-stats" style="display: none;">
+        <div class="stat">
+            <div class="stat-name">HP</div>
+            <div class="stat-bar">
+                <div class="stat-fill" style="width: 25%;"></div>
+            </div>
+        </div>
+        <div class="stat">
+            <div class="stat-name">ATTACK</div>
+            <div class="stat-bar">
+                <div class="stat-fill" style="width: 40%;"></div>
+            </div>
+        </div>
+        <div class="stat">
+            <div class="stat-name">DEFENSE</div>
+            <div class="stat-bar">
+                <div class="stat-fill" style="width: 30%;"></div>
+            </div>
+        </div>
+        <div class="stat">
+            <div class="stat-name">SPECIAL-ATTACK</div>
+            <div class="stat-bar">
+                <div class="stat-fill" style="width: 45%;"></div>
+            </div>
+        </div>
+        <div class="stat">
+            <div class="stat-name">SPECIAL-DEFENSE</div>
+            <div class="stat-bar">
+                <div class="stat-fill" style="width: 50%;"></div>
+            </div>
+        </div>
+        <div class="stat">
+            <div class="stat-name">SPEED</div>
+            <div class="stat-bar">
+                <div class="stat-fill" style="width: 55%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-body" id="nav-evo-chain" style="display: none;">
+
+    </div>`
+}
