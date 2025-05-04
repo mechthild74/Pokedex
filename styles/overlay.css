@@ -55,7 +55,6 @@
     font-size: 36px;
     color: black;
     text-align: center;
-    margin-bottom: 16px;
 }
 
 .overlay-info { 
@@ -94,6 +93,11 @@
   letter-spacing: 2px;
   transform: scale(1.05);
   box-shadow: 0 0 15px rgba(119, 118, 118, 0.7);
+}
+
+.nav-btn img {
+    width: 24px;
+    height: 24px;
 }
 
 /* Container der Navbar */

@@ -1,5 +1,5 @@
 function getCardTemplate(pokemon, i) {
-    const primary = pokemon.types[0];
+    const primary = pokemon.types[0];  // hier kommt der erste Typ rein
     const typesHTML = pokemon.types
     .map(t => 
         `<span class="type ${t}" style="background-color: ${typeColors[t]}">
@@ -23,3 +23,4 @@ function getCardTemplate(pokemon, i) {
             </div>
         </div>`
 }
+
