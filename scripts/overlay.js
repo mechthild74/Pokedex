@@ -1,10 +1,8 @@
 let currentIndex = 0; 
 
-function openOverlay(index) {
-    // current index wird korrekt erkannt
-    currentIndex = index;
-    renderOverlayCard(index);
-    updateOverlay(currentIndex);
+
+
+function showOverlay() {
     const overlay = document.getElementById("overlay");
     overlay.style.display = "flex";
     document.body.style.overflow = 'hidden';
@@ -23,8 +21,7 @@ function renderOverlayCard(index) {
     contentRef.innerHTML += getOverlayCardTemplate(pokemon);
 }
 
-
-function updateOverlay(index){
+function updateOverlayBasicInfo(index){
     let overlayImage = document.getElementById('overlayImage');
     let overlayIdName = document.getElementById('overlayIdName');
     let overlayTypesEl = document.getElementById('overlayTypes');
@@ -40,32 +37,32 @@ function updateOverlay(index){
 
 function showNextImage() {
     currentIndex = (currentIndex + 1) % pokemonList.length;
-    updateOverlay(currentIndex);
+    updateFullOverlay(currentIndex)
 }
 
 function showPrevImage() {
     currentIndex = (currentIndex - 1 + pokemonList.length) % pokemonList.length;
-    updateOverlay(currentIndex);
+    updateFullOverlay(currentIndex)
 }
 
-    function setActiveTab(clickedTab, contentId) {
-        // Alle Tabs deaktivieren
-        const allTabs = document.querySelectorAll('.nav-tab');
-        allTabs.forEach(tab => tab.classList.remove('active'));
-    
-        // Aktuellen Tab aktivieren
-        clickedTab.classList.add('active');
-    
-        // Alle Content-Bereiche verstecken
-        const allContents = document.querySelectorAll('.nav-body');
-        allContents.forEach(content => {
-          content.style.display = 'none';
-        });
-    
-        // Nur den passenden anzeigen
-        const activeContent = document.getElementById(contentId);
-        if (activeContent) {
-          activeContent.style.display = 'block';
-        }
-      }
-  
+function setActiveTab(clickedTab, contentId) {
+    // Alle Tabs deaktivieren
+    const allTabs = document.querySelectorAll('.nav-tab');
+    allTabs.forEach(tab => tab.classList.remove('active'));
+
+    // Aktuellen Tab aktivieren
+    clickedTab.classList.add('active');
+
+    // Alle Content-Bereiche verstecken
+    const allContents = document.querySelectorAll('.nav-body');
+    allContents.forEach(content => {
+        content.style.display = 'none';
+    });
+
+    // Nur den passenden anzeigen
+    const activeContent = document.getElementById(contentId);
+    if (activeContent) {
+        activeContent.style.display = 'block';
+    }
+}
+

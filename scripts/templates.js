@@ -58,60 +58,25 @@ function getOverlayCardTemplate(pokemon) {
             <table class="info-table">
             <tr>
                 <td>HEIGHT:</td>
-                <td>0.6 m</td>
+                <td id="overlayHeight"></td>
             </tr>
             <tr>
                 <td>WEIGHT:</td>
-                <td>8.5 kg</td>
+                <td id="overlayWeight"></td>
             </tr>
             <tr>
                 <td>BASE EXPERIENCE:</td>
-                <td>62</td>
+                <td id="overlayBaseXP"></td>
             </tr>
             <tr>
                 <td>ABILITIES:</td>
-                <td>blaze, solar-power</td>
+                <td id="overlayAbilities"></td>
             </tr>
             </table>
     </div>
 
     <div class="nav-body" id="nav-stats" style="display: none;">
-        <div class="stat">
-            <div class="stat-name">HP</div>
-            <div class="stat-bar">
-                <div class="stat-fill" style="width: 25%;"></div>
-            </div>
-        </div>
-        <div class="stat">
-            <div class="stat-name">ATTACK</div>
-            <div class="stat-bar">
-                <div class="stat-fill" style="width: 40%;"></div>
-            </div>
-        </div>
-        <div class="stat">
-            <div class="stat-name">DEFENSE</div>
-            <div class="stat-bar">
-                <div class="stat-fill" style="width: 30%;"></div>
-            </div>
-        </div>
-        <div class="stat">
-            <div class="stat-name">SPECIAL-ATTACK</div>
-            <div class="stat-bar">
-                <div class="stat-fill" style="width: 45%;"></div>
-            </div>
-        </div>
-        <div class="stat">
-            <div class="stat-name">SPECIAL-DEFENSE</div>
-            <div class="stat-bar">
-                <div class="stat-fill" style="width: 50%;"></div>
-            </div>
-        </div>
-        <div class="stat">
-            <div class="stat-name">SPEED</div>
-            <div class="stat-bar">
-                <div class="stat-fill" style="width: 55%;"></div>
-            </div>
-        </div>
+        <div id="overlayStats" class="stats-container"></div>
     </div>
 
     <div class="nav-body" id="nav-evo-chain" style="display: none;">
