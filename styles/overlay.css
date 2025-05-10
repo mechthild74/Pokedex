@@ -216,3 +216,24 @@
   border-radius: 20px 0 0 20px;
 }
 
+.evo-chain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 40px;
+}
+
+.evo-stage {
+  text-align: center;
+}
+
+.evo-img {
+  width: 100px;
+  height: auto;
+}
+
+.evo-arrow {
+  font-size: 2rem;
+  color: #ccc;
+}

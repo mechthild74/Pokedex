@@ -20,6 +20,7 @@ async function loadPokemonDetails(index) {
   
       updateMainTab(data);
       updateStatsTab(data);
+      updateEvoChainTab(data);
   
     } catch (error) {
       console.error("Fehler beim Laden der Pokémon-Details:", error);
@@ -35,7 +36,7 @@ function updateMainTab(data) {
       .join(', ');
   }
 
-  function updateStatsTab(data) {
+function updateStatsTab(data) {
     
     let statsHtml = '';
 
@@ -52,6 +53,48 @@ function updateMainTab(data) {
             <div class="stat-fill" style="width: ${percent}%"></div>
           </div>
         </div>`;
-  }
-  document.getElementById('overlayStats').innerHTML = statsHtml;
+    }
+    document.getElementById('overlayStats').innerHTML = statsHtml;
 }
+
+async function updateEvoChainTab(data) {
+    const speciesUrl = data.species.url;
+    const speciesData = await (await fetch(speciesUrl)).json();
+  
+    const evoUrl = speciesData.evolution_chain.url;
+    const evoData = await (await fetch(evoUrl)).json();
+  
+    const names = getEvolutionNames(evoData.chain);
+    const evoHtml = await buildEvoStages(names);
+  
+    document.getElementById("nav-evo-chain").innerHTML = `<div class="evo-chain">${evoHtml}</div>`;
+  }
+  
+  function getEvolutionNames(chain) {
+    const names = [chain.species.name];
+  
+    const stage2 = chain.evolves_to?.[0];
+    if (stage2) {
+      names.push(stage2.species.name);
+  
+      const stage3 = stage2.evolves_to?.[0];
+      if (stage3) {
+        names.push(stage3.species.name);
+      }
+    }
+    return names;
+  }
+  
+  async function buildEvoStages(names) {
+    const blocks = await Promise.all(names.map(async (name) => {
+      let p = pokemonList.find(p => p.name === name);
+      if (!p) {
+        const res = await fetch(`${BASE_URL}${name}`);
+        const data = await res.json();
+        p = { name: data.name, img: data.sprites.other['official-artwork'].front_default };
+      }
+      return getEvoStageTemplate(p);
+    }));
+     return blocks.join('<span class="evo-arrow">»</span>');
+  }
+  

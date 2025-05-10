@@ -83,3 +83,12 @@ function getOverlayCardTemplate(pokemon) {
 
     </div>`
 }
+
+function getEvoStageTemplate(p) {
+    return `
+      <div class="evo-stage">
+        <img src="${p.img}" alt="${p.name}" class="evo-img">
+        <div class="evo-name">${p.name.charAt(0).toUpperCase() + p.name.slice(1)}</div>
+      </div>`;
+  }
+  

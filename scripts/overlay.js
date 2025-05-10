@@ -22,17 +22,20 @@ function renderOverlayCard(index) {
 }
 
 function updateOverlayBasicInfo(index){
+    let overlayContent = document.getElementById('overlay-content');
     let overlayImage = document.getElementById('overlayImage');
     let overlayIdName = document.getElementById('overlayIdName');
     let overlayTypesEl = document.getElementById('overlayTypes');
     let selectedPokemon = pokemonList[index];
     let id4 = String(selectedPokemon.id).padStart(4,'0');
+    const primaryType = selectedPokemon.types[0];
 
      overlayImage.src = selectedPokemon.img;
      overlayIdName.textContent = `#${id4} ${(selectedPokemon.name)}`;
      overlayTypesEl.innerHTML = selectedPokemon.types.map(t =>
        `<img src="${getTypeIcon(t)}" alt="${t}" title="${(t)}" style="background:${typeColors[t]}; padding:4px; border-radius:50%;"/>`
      ).join('');
+     overlayContent.style.border = `4px solid ${typeColors[primaryType]}`;
 }
 
 function showNextImage() {
