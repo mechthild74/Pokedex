@@ -1,7 +1,5 @@
 let currentIndex = 0; 
 
-
-
 function showOverlay() {
     const overlay = document.getElementById("overlay");
     overlay.style.display = "flex";

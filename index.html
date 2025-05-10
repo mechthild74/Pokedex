@@ -26,7 +26,7 @@
                 <img class="header-logo" src="./assets/img/pokemon-icon.png" alt="pokemon-icon">
                 <span>Pokedex</span>
             </div>
-            <input type="text" placeholder="Type character name" id="search-input">
+            <input type="text" placeholder="Search name by min. three letters" id="search-input" onkeyup="inputSearch(this.value)">
         </div>
     </header>
 
@@ -35,7 +35,7 @@
         <div id="card-container" class="card-container">
            
         </div>
-        <button class="btn-more" id="btn-more" onclick="loadPokemonData()">Load more ...</button>
+        <button class="btn-more" id="btn-more" onclick="loadMore()">Load more ...</button>
     </main>
 
     <div id="overlay" class="overlay" onclick="closeOverlay()">

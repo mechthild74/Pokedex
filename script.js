@@ -8,11 +8,14 @@ let allLoaded = false;
 let totalCount = null;
 const searchInput = document.getElementById("search-input");
 
-let primary = "";
+let primary = "";  // klären ob diese Variable hier gebraucht wird
+
+let searchTimeout = null;
+const DEBOUNCE_DELAY = 300; // ms
 
 function init() {
     loadPokemonData();
-    console.log(pokemonList);
+    console.log(pokemonList);  //Achtung abschließend entfernen
 }
 
 function renderCards(list) {
@@ -27,38 +30,23 @@ function getTypeIcon(tname) {
     return `./assets/svgTypes/${tname}.svg`;
 }
 
-async function loadPokemonData() {
-    if (allLoaded) return; 
+function inputSearch(value) {
+    const input = value.toLowerCase().trim();
 
-    const listRes = await fetch(`${BASE_URL}?offset=${offset}&limit=${limit}`);
-    const listData = await listRes.json();  
-    totalCount = listData.count; 
-    
-    for (const item of listData.results) {
-        const detailRes = await fetch(item.url);
-        const detail  = await detailRes.json();
-        pokemonList.push({
-            id:   detail.id,
-            name: detail.name,
-            img:  detail.sprites.other['official-artwork'].front_default,
-            types: detail.types.map(t => t.type.name)
-        });
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+        if (input.length >= 3) {
+        searchPokemon(input);
+        } else {
+            init();
+        }
+    }, DEBOUNCE_DELAY);
+  }
+
+  function loadMore() {
+    loadPokemonData();
+    if (allLoaded) {
+        const loadMoreBtn = document.getElementById("load-more-btn");
+        loadMoreBtn.style.display = "none";
     }
-
-    offset += limit;
-    if (offset >= totalCount) allLoaded = true;
-    renderCards(pokemonList);
-}
-
-function renderPokemons(list) {
-    let contentRef = document.getElementById("card-container");
-    contentRef.innerHTML = "";
-    const query = searchInput.value.toLowerCase().trim();
-    const filtered = query.length >= 3 ? list.filter(p => detail.name.startsWith(query)) : list;
-    filtered.forEach(pokemon => {
-        contentRef.innerHTML += getCardTemplate(pokemon);
-    });
-}
-
-//   searchInput.addEventListener('input', () => renderPokemons(pokemonList));
-
+  }

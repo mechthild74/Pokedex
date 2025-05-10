@@ -1,3 +1,61 @@
+async function loadPokemonData() {
+    if (allLoaded) return; 
+
+    const listRes = await fetch(`${BASE_URL}?offset=${offset}&limit=${limit}`);
+    const listData = await listRes.json();  
+    totalCount = listData.count; 
+    
+    for (const item of listData.results) {
+        const detailRes = await fetch(item.url);
+        const detail  = await detailRes.json();
+        pokemonList.push({
+            id:   detail.id,
+            name: detail.name,
+            img:  detail.sprites.other['official-artwork'].front_default,
+            types: detail.types.map(t => t.type.name)
+        });
+    }
+
+    offset += limit;
+    if (offset >= totalCount) allLoaded = true;
+    renderCards(pokemonList);
+}
+
+async function searchPokemon(query) {
+    // 1) Hol dir alle Pokémon-Namen einmalig
+    const listInput  = await fetch(`${BASE_URL}?offset=0&limit=100000`);
+    const listData = await listInput.json();
+  
+    // 2) Filtere nach deiner Query
+    const matches = listData.results
+      .filter(input => input.name.startsWith(query))
+      .slice(0, 20);  // optional: max. 20
+  
+    // 3) Wenn keine Matches gefunden wurden, einfach abbrechen
+    if (matches.length === 0) {
+      return; // hier: keine Veränderung an pokemonList oder UI
+    }
+  
+    // 4) Es gibt Treffer → jetzt leere Liste & UI
+    pokemonList = [];
+    renderCards(pokemonList);
+  
+    // 5) Lade Detaildaten nur für die Matches
+    for (const item of matches) {
+      const detRes = await fetch(item.url);
+      const det    = await detRes.json();
+      pokemonList.push({
+        id:    det.id,
+        name:  det.name,
+        img:   det.sprites.other['official-artwork'].front_default,
+        types: det.types.map(t => t.type.name)
+      });
+    }
+  
+    // 6) Zeige die gefundenen Karten
+    renderCards(pokemonList);
+  }
+
 async function openOverlay(index) {
     await updateFullOverlay(index);  // rendert & lädt alle Inhalte
     showOverlay();    
