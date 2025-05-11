@@ -18,15 +18,16 @@ async function loadPokemonData() {
 
     offset += limit;
     if (offset >= totalCount) allLoaded = true;
+    
     renderCards(pokemonList);
+    checkAllLoaded(); 
 }
 
 async function searchPokemon(query) {
     // 1) Auf Such-Modus umschalten
     searchMode      = true;
     searchOffset    = 0;
-    searchAllLoaded = false;
-  
+      
     // 2) Alle Pokémon-Namen/URLs auf einmal holen
     const listRes  = await fetch(`${BASE_URL}?offset=0&limit=100000`);
     const listData = await listRes.json();
@@ -50,11 +51,6 @@ async function loadSearchData() {
       searchOffset + limit
     );
   
-    if (pageItems.length === 0) {
-      searchAllLoaded = true;
-      return;
-    }
-  
     // 4) Detaildaten für jedes Item aus dieser Seite holen
     for (const item of pageItems) {
       const detailRes = await fetch(item.url);
@@ -69,16 +65,18 @@ async function loadSearchData() {
       });
     }
   
-  
     searchOffset += limit;
   
     // 7) Wenn wir über alle Treffer hinaus sind, alles geladen
     if (searchOffset >= searchMatches.length) {
-      searchAllLoaded = true;
+        allLoaded = true;
+    } else {
+        allLoaded = false;
     }
   
     // 8) UI updaten
     renderCards(pokemonList);
+    checkAllLoaded();
 }
 
 async function loadMore() {
@@ -87,11 +85,6 @@ async function loadMore() {
     } else {
     
         await loadPokemonData();
-    }
-   
-    if (allLoaded) {
-        const loadMoreBtn = document.getElementById("load-more-btn");
-        loadMoreBtn.style.display = "none";
     }
 }
 
@@ -194,4 +187,7 @@ async function updateEvoChainTab(data) {
     }));
      return blocks.join('<span class="evo-arrow">»</span>');
 }
+
+
+  
   
