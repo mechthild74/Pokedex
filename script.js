@@ -8,12 +8,21 @@ let allLoaded = false;
 let totalCount = null;
 const searchInput = document.getElementById("search-input");
 
-let primary = "";  // klären ob diese Variable hier gebraucht wird
+// let primary = "";  // klären ob diese Variable hier gebraucht wird
+
+// Zusätzlicher State nur für den Such-Modus
+let searchMode        = false; // Flag: befinden wir uns gerade im Such-Modus?
+let searchMatches     = [];    // Gefilterte Treffer (Name + URL) für die Query
+let searchOffset      = 0;     // Off­set innerhalb von searchMatches
+let searchAllLoaded   = false; // Flag: sind alle Treffer im Such-Modus geladen?aden?
 
 let searchTimeout = null;
 const DEBOUNCE_DELAY = 300; // ms
 
 function init() {
+    pokemonList = [];
+    offset = 0;
+    limit = 20;
     loadPokemonData();
     console.log(pokemonList);  //Achtung abschließend entfernen
 }
@@ -43,10 +52,4 @@ function inputSearch(value) {
     }, DEBOUNCE_DELAY);
   }
 
-  function loadMore() {
-    loadPokemonData();
-    if (allLoaded) {
-        const loadMoreBtn = document.getElementById("load-more-btn");
-        loadMoreBtn.style.display = "none";
-    }
-  }
+  

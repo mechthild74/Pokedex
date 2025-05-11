@@ -22,39 +22,78 @@ async function loadPokemonData() {
 }
 
 async function searchPokemon(query) {
-    // 1) Hol dir alle Pokémon-Namen einmalig
-    const listInput  = await fetch(`${BASE_URL}?offset=0&limit=100000`);
-    const listData = await listInput.json();
+    // 1) Auf Such-Modus umschalten
+    searchMode      = true;
+    searchOffset    = 0;
+    searchAllLoaded = false;
   
-    // 2) Filtere nach deiner Query
-    const matches = listData.results
-      .filter(input => input.name.startsWith(query))
-      .slice(0, 20);  // optional: max. 20
+    // 2) Alle Pokémon-Namen/URLs auf einmal holen
+    const listRes  = await fetch(`${BASE_URL}?offset=0&limit=100000`);
+    const listData = await listRes.json();
   
-    // 3) Wenn keine Matches gefunden wurden, einfach abbrechen
-    if (matches.length === 0) {
-      return; // hier: keine Veränderung an pokemonList oder UI
-    }
+    // 3) Lokal auf prefix matchen
+    searchMatches = listData.results
+      .filter(p => p.name.startsWith(query));
   
-    // 4) Es gibt Treffer → jetzt leere Liste & UI
+    // 4) Pokémon-Liste leeren und sofort rendern (zeigt leere UI)
     pokemonList = [];
     renderCards(pokemonList);
   
-    // 5) Lade Detaildaten nur für die Matches
-    for (const item of matches) {
-      const detRes = await fetch(item.url);
-      const det    = await detRes.json();
+    // 5) Erste Seite der Such-Treffer laden
+    await loadSearchData();
+}
+
+async function loadSearchData() {
+    
+    const pageItems = searchMatches.slice(
+      searchOffset,
+      searchOffset + limit
+    );
+  
+    if (pageItems.length === 0) {
+      searchAllLoaded = true;
+      return;
+    }
+  
+    // 4) Detaildaten für jedes Item aus dieser Seite holen
+    for (const item of pageItems) {
+      const detailRes = await fetch(item.url);
+      const detail    = await detailRes.json();
+  
+      // 5) Ins gemeinsame Array pushen (wie in loadPokemonData)
       pokemonList.push({
-        id:    det.id,
-        name:  det.name,
-        img:   det.sprites.other['official-artwork'].front_default,
-        types: det.types.map(t => t.type.name)
+        id:    detail.id,
+        name:  detail.name,
+        img:   detail.sprites.other['official-artwork'].front_default,
+        types: detail.types.map(t => t.type.name)
       });
     }
   
-    // 6) Zeige die gefundenen Karten
+  
+    searchOffset += limit;
+  
+    // 7) Wenn wir über alle Treffer hinaus sind, alles geladen
+    if (searchOffset >= searchMatches.length) {
+      searchAllLoaded = true;
+    }
+  
+    // 8) UI updaten
     renderCards(pokemonList);
-  }
+}
+
+async function loadMore() {
+    if (searchMode) {
+        await loadSearchPage();
+    } else {
+    
+        await loadPokemonData();
+    }
+   
+    if (allLoaded) {
+        const loadMoreBtn = document.getElementById("load-more-btn");
+        loadMoreBtn.style.display = "none";
+    }
+}
 
 async function openOverlay(index) {
     await updateFullOverlay(index);  // rendert & lädt alle Inhalte
@@ -92,7 +131,7 @@ function updateMainTab(data) {
     document.getElementById('overlayAbilities').textContent = data.abilities
       .map(a => a.ability.name)
       .join(', ');
-  }
+}
 
 function updateStatsTab(data) {
     
@@ -126,7 +165,7 @@ async function updateEvoChainTab(data) {
     const evoHtml = await buildEvoStages(names);
   
     document.getElementById("nav-evo-chain").innerHTML = `<div class="evo-chain">${evoHtml}</div>`;
-  }
+}
   
   function getEvolutionNames(chain) {
     const names = [chain.species.name];
@@ -141,7 +180,7 @@ async function updateEvoChainTab(data) {
       }
     }
     return names;
-  }
+}
   
   async function buildEvoStages(names) {
     const blocks = await Promise.all(names.map(async (name) => {
@@ -154,5 +193,5 @@ async function updateEvoChainTab(data) {
       return getEvoStageTemplate(p);
     }));
      return blocks.join('<span class="evo-arrow">»</span>');
-  }
+}
   
