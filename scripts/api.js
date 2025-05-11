@@ -1,6 +1,8 @@
 async function loadPokemonData() {
     if (allLoaded) return; 
 
+  showLoadingSpinner()
+
     const listRes = await fetch(`${BASE_URL}?offset=${offset}&limit=${limit}`);
     const listData = await listRes.json();  
     totalCount = listData.count; 
@@ -19,6 +21,7 @@ async function loadPokemonData() {
     offset += limit;
     if (offset >= totalCount) allLoaded = true;
     
+    disableLoadingSpinner(); 
     renderCards(pokemonList);
     checkAllLoaded(); 
 }

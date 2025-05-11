@@ -1,0 +1,27 @@
+.spinner-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .spinner {
+    width: 100px;
+    height: 100px;
+    transform-origin: center center;
+    animation: spin 3s linear infinite;
+    display: block;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  .loading-text {
+    margin-top: 12px
+    color: #555;
+    font-size: 24px
+  }
+
+ 

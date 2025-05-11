@@ -9,7 +9,7 @@
 }
 
 .card {
-    width: 250px;
+    width: 270px;
     background-color: #232B2F;
     border-radius: 12px;
     padding: 16px;
@@ -23,10 +23,13 @@
 .card-header {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
     align-items: center;
     margin-bottom: 8px;
-    padding: 0 16px;
+    padding: 0 4px;
+    gap: 8px;
+    flex-wrap: nowrap;        /* Keine Umbrüche zwischen den Items */
+    white-space: nowrap;      /* Zeilenumbruch grundsätzlich verbieten */
 }
 
 .number {
@@ -37,13 +40,17 @@
   .name {
     font-weight: bold;
     font-size: 24px;
-    text-align: center;
+    text-align: left;
     flex-grow: 1;
     text-transform: capitalize;
+    min-width: 0;             /* Erlaubt dem Flex-Item zu schrumpfen */
+    overflow: hidden;         /* Versteckt Überhang */
+    text-overflow: ellipsis;  /* Setzt „…“ ans Ende */
+    white-space: nowrap;      /* No-Wrap auch hier */
   }
 
   .img-container {
-    width: 200px; 
+    width: 240px; 
     height: 160px;
     display: flex; 
     align-items: flex-end; 
@@ -54,22 +61,22 @@
   }
 
 .card-img {
-    width: 124px;
-    height: 124px;
+    width: 132px;
+    height: 132px;
     object-fit: contain;
     filter: drop-shadow(8px 8px 12px rgb(22, 22, 22));
 }
 
 .card-img:hover {
     cursor: pointer;
-    transform: scale(1.1);
+    transform: scale(1.2);
 }
 
 .types {
     display: flex; 
     justify-content: center; 
     gap: 8px;
-    margin-top: 16px;
+    margin: 16px 0;
   }
 
 .type {
