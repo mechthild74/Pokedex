@@ -36,9 +36,11 @@
 
         <div id="card-container" class="card-container"> </div>
 
-        <div class="spinner-container" id="spinner-container">
-            <img src="./assets/img/pokemon-icon.png" alt="Poké Logo" class="spinner">
-            <p class="loading-text">...loading</p>
+        <div id="spinner-overlay" class="spinner-overlay d-none">
+            <div class="spinner-content">
+                <img src="./assets/img/pokemon-icon.png" alt="Poké Logo" class="spinner-rotating">
+                <p class="spinner-text">loading ...</p>
+            </div>
         </div>
 
         <button class="btn-more" id="btn-more" onclick="loadMore()">Load more ...</button>

@@ -64,12 +64,10 @@ function checkAllLoaded() {
 }   
 
 function showLoadingSpinner() {
-    // loadMoreBtn.style.display = "none";
-    spinConainer.style.display = 'flex';
+   document.getElementById("spinner-overlay").classList.remove("d-none");
 }
 
   function disableLoadingSpinner() {
-    spinConainer.style.display = 'none';
-    // loadMoreBtn.style.display = "block";
+    document.getElementById("spinner-overlay").classList.add("d-none");
 }
 
