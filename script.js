@@ -24,7 +24,6 @@ function init() {
     offset = 0;
     allLoaded = false;
     loadPokemonData();
-    console.log(pokemonList);  //Achtung abschließend entfernen
     checkAllLoaded();
 }
 
@@ -67,7 +66,7 @@ function showLoadingSpinner() {
    document.getElementById("spinner-overlay").classList.remove("d-none");
 }
 
-  function disableLoadingSpinner() {
+function disableLoadingSpinner() {
     document.getElementById("spinner-overlay").classList.add("d-none");
 }
 

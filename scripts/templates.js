@@ -31,11 +31,11 @@ function getOverlayCardTemplate(pokemon) {
     return `
     <div class="overlay-header">
         <button id="prevBtn" class="nav-btn" onclick="showPrevImage()">
-            <img src="./assets/icons/left-arrow-v1.png" alt="previous icon">
+            <img src="./assets/icons/pre_button.png" alt="previous icon">
         </button>
         <div id="overlayIdName" class="overlay-id-name"></div>
         <button id="nextBtn" class="nav-btn" onclick="showNextImage()">
-            <img src="./assets/icons/right-arrow-v1.png" alt="next icon">
+            <img src="./assets/icons/next_button.png" alt="next icon">
         </button>
     </div>
 

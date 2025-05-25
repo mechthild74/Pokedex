@@ -53,8 +53,10 @@ header {
     align-items: center;
 }
 
-.gap {
+.logo-text {
     gap: 16px;
+    display: flex;
+    align-items: center;
 }
 
 .header-logo {
