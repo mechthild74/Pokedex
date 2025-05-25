@@ -31,7 +31,8 @@ async function searchPokemon(query) {
     // 1) Auf Such-Modus umschalten
     searchMode      = true;
     searchOffset    = 0;
-      
+    
+
     // 2) Alle Pokémon-Namen/URLs auf einmal holen
     const listRes  = await fetch(`${BASE_URL}?offset=0&limit=100000`);
     const listData = await listRes.json();
@@ -84,12 +85,14 @@ async function loadSearchData() {
 }
 
 async function loadMore() {
+    showLoadingSpinner();
     if (searchMode) {
         await loadSearchPage();
     } else {
     
         await loadPokemonData();
     }
+    disableLoadingSpinner();
 }
 
 async function openOverlay(index) {
