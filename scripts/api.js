@@ -1,85 +1,78 @@
 async function loadPokemonData() {
-    
-    const listRes = await fetch(`${BASE_URL}?offset=${offset}&limit=${limit}`);
-    const listData = await listRes.json();  
-    totalCount = listData.count; 
+  const listData = await fetchPokemonList(offset, limit);  
+  
+  if (allLoaded) return; 
 
-    if (allLoaded) return; 
+  showLoadingSpinner();
+  await fetchAndStoreDetails(listData.results);
 
-    showLoadingSpinner()
-    
-    for (const item of listData.results) {
-        const detailRes = await fetch(item.url);
-        const detail  = await detailRes.json();
-        pokemonList.push({
-            id:   detail.id,
-            name: detail.name,
-            img:  detail.sprites.other['official-artwork'].front_default,
-            types: detail.types.map(t => t.type.name)
-        });
-    }
-
-    offset += limit;
-    if (offset >= totalCount) allLoaded = true;
-    
-    disableLoadingSpinner(); 
-    renderCards(pokemonList);
-    checkAllLoaded(); 
+  offset += limit;
+  if (offset >= totalCount) allLoaded = true;
+  
+  disableLoadingSpinner(); 
+  renderCards(pokemonList);
+  checkAllLoaded(); 
 }
 
+async function fetchPokemonList(offset, limit) {
+    const res = await fetch(`${BASE_URL}?offset=${offset}&limit=${limit}`);
+    const data = await res.json();
+    totalCount = data.count;
+    return data;
+}
+
+async function fetchAndStoreDetails(results) {
+    for (const item of results) {
+        const detailRes = await fetch(item.url);
+        const detail = await detailRes.json();
+        pokemonList.push(formatPokemonData(detail));
+    }
+}
+
+function formatPokemonData(detail) {
+    return {
+        id: detail.id,
+        name: detail.name,
+        img: detail.sprites.other['official-artwork'].front_default,
+        types: detail.types.map(t => t.type.name),
+    };
+}
+ 
 async function searchPokemon(query) {
-    // 1) Auf Such-Modus umschalten
     searchMode      = true;
     searchOffset    = 0;
     
-
-    // 2) Alle Pokémon-Namen/URLs auf einmal holen
     const listRes  = await fetch(`${BASE_URL}?offset=0&limit=100000`);
     const listData = await listRes.json();
   
-    // 3) Lokal auf prefix matchen
     searchMatches = listData.results
       .filter(p => p.name.startsWith(query));
   
-    // 4) Pokémon-Liste leeren und sofort rendern (zeigt leere UI)
     pokemonList = [];
     renderCards(pokemonList);
   
-    // 5) Erste Seite der Such-Treffer laden
     await loadSearchData();
 }
 
 async function loadSearchData() {
-    
     const pageItems = searchMatches.slice(
       searchOffset,
       searchOffset + limit
     );
   
-    // 4) Detaildaten für jedes Item aus dieser Seite holen
     for (const item of pageItems) {
       const detailRes = await fetch(item.url);
       const detail    = await detailRes.json();
-  
-      // 5) Ins gemeinsame Array pushen (wie in loadPokemonData)
-      pokemonList.push({
-        id:    detail.id,
-        name:  detail.name,
-        img:   detail.sprites.other['official-artwork'].front_default,
-        types: detail.types.map(t => t.type.name)
-      });
+      pokemonList.push(formatPokemonData(detail));
     }
   
     searchOffset += limit;
   
-    // 7) Wenn wir über alle Treffer hinaus sind, alles geladen
     if (searchOffset >= searchMatches.length) {
         allLoaded = true;
-    } else {
-        allLoaded = false;
+      } else {allLoaded = false;
     }
   
-    // 8) UI updaten
     renderCards(pokemonList);
     checkAllLoaded();
 }
@@ -88,23 +81,22 @@ async function loadMore() {
     showLoadingSpinner();
     if (searchMode) {
         await loadSearchPage();
-    } else {
-    
+      } else {
         await loadPokemonData();
     }
     disableLoadingSpinner();
 }
 
 async function openOverlay(index) {
-    await updateFullOverlay(index);  // rendert & lädt alle Inhalte
+    await updateFullOverlay(index);  
     showOverlay();    
 }
 
 async function updateFullOverlay(index) {
     currentIndex = index;
-    renderOverlayCard(index);           // HTML-Grundgerüst
-    updateOverlayBasicInfo(index);      // Name, Bild, Typen aus Liste
-    await loadPokemonDetails(index);    // Details aus API (main-Tab)
+    renderOverlayCard(index);           
+    updateOverlayBasicInfo(index);      
+    await loadPokemonDetails(index);    
 }
 
 async function loadPokemonDetails(index) {
@@ -167,19 +159,19 @@ async function updateEvoChainTab(data) {
     document.getElementById("nav-evo-chain").innerHTML = `<div class="evo-chain">${evoHtml}</div>`;
 }
   
-  function getEvolutionNames(chain) {
-    const names = [chain.species.name];
-  
-    const stage2 = chain.evolves_to?.[0];
-    if (stage2) {
-      names.push(stage2.species.name);
-  
-      const stage3 = stage2.evolves_to?.[0];
-      if (stage3) {
-        names.push(stage3.species.name);
-      }
+function getEvolutionNames(chain) {
+  const names = [chain.species.name];
+
+  const stage2 = chain.evolves_to?.[0];
+  if (stage2) {
+    names.push(stage2.species.name);
+
+    const stage3 = stage2.evolves_to?.[0];
+    if (stage3) {
+      names.push(stage3.species.name);
     }
-    return names;
+  }
+  return names;
 }
   
   async function buildEvoStages(names) {

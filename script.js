@@ -1,5 +1,4 @@
 const BASE_URL = "https://pokeapi.co/api/v2/pokemon/";
-
 let pokemonList = [];
 let offset = 0;
 let limit = 20;
@@ -7,16 +6,11 @@ let currentPokemon = 0;
 let allLoaded = false;
 let totalCount = null;
 const searchInput = document.getElementById("search-input");
-
-// Zusätzlicher State nur für den Such-Modus
-let searchMode        = false; // Flag: befinden wir uns gerade im Such-Modus?
-let searchMatches     = [];    // Gefilterte Treffer (Name + URL) für die Query
-let searchOffset      = 0;     // Off­set innerhalb von searchMatches
-//let searchAllLoaded   = false; // Flag: sind alle Treffer im Such-Modus geladen?aden?
-
+let searchMode        = false; 
+let searchMatches     = [];   
+let searchOffset      = 0;     
 let searchTimeout = null;
 const DEBOUNCE_DELAY = 300;
-
 const spinConainer = document.getElementById('spinner-container');
 
 function init() {

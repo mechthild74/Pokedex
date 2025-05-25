@@ -1,5 +1,5 @@
 function getCardTemplate(pokemon, i) {
-    primary = pokemon.types[0];  // hier kommt der erste Typ rein
+    primary = pokemon.types[0];  
     const typesHTML = pokemon.types
     .map(t => 
         `<span class="type ${t}" style="background-color: ${typeColors[t]}">
@@ -26,7 +26,7 @@ function getCardTemplate(pokemon, i) {
 
 function getOverlayCardTemplate(pokemon) {
     
-    const primaryback = pokemon.types[0]; // Lokale Bestimmung des Haupttyps
+    const primaryback = pokemon.types[0]; 
     
     return `
     <div class="overlay-header">

@@ -32,6 +32,10 @@
     height: 30%;                
   }
 
+  .nav-body {
+      font-size: 18px !important;
+  }
+
   .nav-tab {
     font-size: 18px;
     padding: 8px 12px;
